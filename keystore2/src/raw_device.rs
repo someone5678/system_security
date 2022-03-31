@@ -18,7 +18,7 @@ use crate::{
     database::{
         BlobInfo, BlobMetaData, BlobMetaEntry, CertificateInfo, DateTime, KeyEntry,
         KeyEntryLoadBits, KeyIdGuard, KeyMetaData, KeyMetaEntry, KeyType, KeystoreDB,
-        SubComponentType, Uuid,
+        Uuid,
     },
     error::{map_km_error, Error, ErrorCode},
     globals::get_keymint_device,
@@ -253,8 +253,8 @@ impl KeyMintDevice {
     /// write the upgraded key to the database.
     fn upgrade_keyblob_if_required_with<'a, T, F>(
         &self,
-        db: &mut KeystoreDB,
-        key_id_guard: &KeyIdGuard,
+        _db: &mut KeystoreDB,
+        _key_id_guard: &KeyIdGuard,
         key_blob: KeyBlob<'a>,
         f: F,
     ) -> Result<(T, KeyBlob<'a>)>
@@ -275,6 +275,7 @@ impl KeyMintDevice {
                 let mut new_blob_metadata = BlobMetaData::new();
                 new_blob_metadata.add(BlobMetaEntry::KmUuid(self.km_uuid));
 
+                /*
                 db.set_blob(
                     key_id_guard,
                     SubComponentType::KEY_BLOB,
@@ -285,7 +286,7 @@ impl KeyMintDevice {
                     "In upgrade_keyblob_if_required_with: ",
                     "Failed to insert upgraded blob into the database"
                 ))?;
-
+*/
                 Ok((
                     f(&upgraded_blob).context(
                         "In upgrade_keyblob_if_required_with: Closure failed after upgrade",
